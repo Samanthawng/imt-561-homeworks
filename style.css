@@ -214,3 +214,21 @@ canvas {
   display: block;
   margin: 0 auto;
 }
+.iteration-grid {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.iteration-item {
+  max-width: 420px;
+}
+
+.iteration-item img {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+}
