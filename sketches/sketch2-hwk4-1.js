@@ -15,119 +15,119 @@ new p5(function (p) {
     const s = p.second();
 
     p.noStroke();
-    p.fill(210, 214, 222);
-    p.rect(100, 100, 680, 330, 14);
-    p.fill(185, 190, 200);
-    p.quad(780, 100, 815, 125, 815, 455, 780, 430);
-    p.fill(170, 176, 188);
-    p.quad(100, 430, 780, 430, 815, 455, 135, 455);
+    p.fill(185, 192, 205);
+    p.quad(90, 430, 790, 430, 830, 465, 130, 465);
 
     p.fill(255);
     p.stroke(40);
     p.strokeWeight(3);
-    p.rect(80, 80, 700, 350, 14);
+    p.rect(70, 70, 720, 360, 18);
 
     p.noStroke();
-    p.fill(30);
+    p.fill(35);
     p.textSize(28);
     p.textStyle(p.BOLD);
-    p.text("Meeting Wave Clock", 110, 125);
+    p.text("Meeting Wave Clock", 105, 118);
     p.textStyle(p.NORMAL);
 
-    const chartX = 120;
-    const chartY = 165;
-    const chartW = 610;
+    const chartX = 110;
+    const chartY = 150;
+    const chartW = 620;
     const chartH = 190;
     const baseY = chartY + chartH * 0.78;
 
     p.stroke(225);
     p.strokeWeight(1);
     for (let i = 0; i <= 4; i++) {
-      let y = chartY + i * chartH / 4;
+      const y = chartY + (chartH / 4) * i;
       p.line(chartX, y, chartX + chartW, y);
     }
 
-    let points = [];
-    for (let i = 0; i <= 18; i++) {
-      let t = i / 18;
-      let amp =
-        18 +
-        120 * p.exp(-p.pow((t - 0.42) * 8, 2)) +
-        95 * p.exp(-p.pow((t - 0.55) * 10, 2)) +
-        45 * p.exp(-p.pow((t - 0.78) * 9, 2));
+    let pts = [];
+    for (let x = 0; x <= chartW; x += 8) {
+      const t = x / chartW;
 
-      amp *= 0.75 + 0.5 * p.noise(i * 1.7);
-      let x = chartX + t * chartW;
-      let y = baseY - amp;
-      points.push({ x, y, amp, t });
+      const noonPeak = p.exp(-p.pow((t - 0.43) * 6.5, 2));
+      const secondPeak = p.exp(-p.pow((t - 0.58) * 8, 2));
+      const afternoon = p.exp(-p.pow((t - 0.78) * 6, 2));
+
+      let intensity = 0.08 + noonPeak * 0.9 + secondPeak * 0.55 + afternoon * 0.28;
+
+      const ripple =
+        p.sin(t * p.TWO_PI * 5 + 0.6) * 8 +
+        p.sin(t * p.TWO_PI * 11) * 4;
+
+      const y = baseY - intensity * 120 + ripple;
+      pts.push({ x: chartX + x, y, t, intensity });
     }
 
-    p.noStroke();
-    p.fill(0, 0, 0, 30);
-    p.beginShape();
-    p.vertex(chartX + 18, baseY + 18);
-    for (let pt of points) p.vertex(pt.x + 18, pt.y + 18);
-    p.vertex(chartX + chartW + 18, baseY + 18);
-    p.endShape(p.CLOSE);
+    function drawSmoothShape(filterFn, fillColor) {
+      p.noStroke();
+      p.fill(fillColor);
+      p.beginShape();
+      p.vertex(chartX, baseY);
 
-    p.beginShape();
-    p.vertex(chartX, baseY);
-    for (let pt of points) {
-      if (pt.amp > 85) p.fill(215, 55, 55, 210);
-      else p.fill(45, 105, 190, 200);
-      p.vertex(pt.x, pt.y);
+      for (let pt of pts) {
+        let y = filterFn(pt) ? pt.y : baseY;
+        p.curveVertex(pt.x, y);
+      }
+
+      p.vertex(chartX + chartW, baseY);
+      p.endShape(p.CLOSE);
     }
-    p.vertex(chartX + chartW, baseY);
-    p.endShape(p.CLOSE);
 
+    drawSmoothShape(() => true, p.color(55, 120, 200, 210));
+
+    drawSmoothShape((pt) => pt.intensity > 0.62, p.color(220, 65, 65, 220));
+    
     p.noFill();
-    p.stroke(20);
+    p.stroke(25);
     p.strokeWeight(4);
     p.beginShape();
-    for (let pt of points) p.vertex(pt.x, pt.y);
+    for (let i = 0; i < pts.length; i++) {
+      p.curveVertex(pts[i].x, pts[i].y);
+    }
     p.endShape();
 
-    p.noStroke();
-    for (let pt of points) {
-      if (pt.amp > 85) {
-        p.fill(220, 50, 50, 230);
-        p.triangle(pt.x - 18, baseY, pt.x, pt.y, pt.x + 18, baseY);
-      }
-    }
-
+    p.stroke(140);
+    p.strokeWeight(2);
+    p.line(chartX, baseY, chartX + chartW, baseY);
+    
     const dayProgress = p.map(h + m / 60 + s / 3600, 9, 18, 0, 1, true);
     const currentX = chartX + dayProgress * chartW;
 
     p.stroke(40);
     p.strokeWeight(2);
-    p.line(currentX, chartY, currentX, baseY + 20);
+    p.line(currentX, chartY, currentX, baseY + 24);
     p.noStroke();
     p.fill(40);
-    p.circle(currentX, baseY + 20, 9);
+    p.circle(currentX, baseY + 24, 9);
 
     p.fill(70);
     p.textSize(14);
     p.textAlign(p.CENTER);
     p.text("9AM", chartX, baseY + 45);
-    p.text("12PM", chartX + chartW * 0.42, baseY + 45);
+    p.text("12PM", chartX + chartW * 0.43, baseY + 45);
     p.text("3PM", chartX + chartW * 0.72, baseY + 45);
     p.text("6PM", chartX + chartW, baseY + 45);
 
     p.textAlign(p.LEFT);
     p.textSize(15);
-    p.fill(45, 105, 190);
-    p.rect(120, 395, 14, 14);
-    p.fill(70);
-    p.text("normal meeting load", 142, 407);
 
-    p.fill(215, 55, 55);
-    p.rect(320, 395, 14, 14);
-    p.fill(70);
-    p.text("peak meeting intensity", 342, 407);
+    p.noStroke();
+    p.fill(55, 120, 200);
+    p.rect(110, 390, 14, 14);
+    p.fill(60);
+    p.text("normal meeting load", 132, 403);
+
+    p.fill(220, 65, 65);
+    p.rect(310, 390, 14, 14);
+    p.fill(60);
+    p.text("peak meeting intensity", 332, 403);
 
     p.textSize(18);
     p.fill(30);
-    p.text(formatTime(h, m, s), 610, 407);
+    p.text(formatTime(h, m, s), 610, 403);
   };
 
   function formatTime(h, m, s) {
