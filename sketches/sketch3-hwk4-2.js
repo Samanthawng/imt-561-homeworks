@@ -15,37 +15,43 @@ new p5(function (p) {
     const m = p.minute();
     const s = p.second();
 
+    // 3D shadow
     p.noStroke();
     p.fill(185, 192, 205);
     p.quad(65, 485, 820, 485, 855, 520, 100, 520);
 
+    // card
     p.fill(255);
     p.stroke(35);
     p.strokeWeight(4);
     p.rect(40, 40, 790, 445, 22);
 
+    // large current timer
     p.noStroke();
-    p.fill(35);
+    p.fill(30);
     p.textAlign(p.RIGHT);
     p.textStyle(p.BOLD);
-    p.textSize(48);
-    p.text(formatTime(h, m), 785, 105);
+    p.textSize(64);
+    p.text(formatTime(h, m), 790, 115);
 
+    // date
     p.textStyle(p.NORMAL);
-    p.textSize(22);
+    p.textSize(24);
     p.fill(55);
-    p.text("May 4, 2026", 785, 145);
-    p.text("Monday", 785, 178);
+    p.text("May 4, 2026", 790, 155);
+    p.text("Monday", 790, 188);
 
+    // fish grid: 6 rows x 4 columns
     const cols = 4;
     const rows = 6;
-    const startX = 115;
+    const startX = 110;
     const startY = 115;
     const spacingX = 105;
     const spacingY = 52;
 
-    const fishEaten = p.floor(p.map(m, 0, 59, 0, totalFish));
-    const remainingFish = totalFish - fishEaten;
+    // each fish = one hour
+    const eatenFish = h;
+    const remainingFish = totalFish - eatenFish;
 
     for (let i = 0; i < totalFish; i++) {
       const col = i % cols;
@@ -54,44 +60,63 @@ new p5(function (p) {
       const y = startY + row * spacingY;
 
       if (i < remainingFish) {
-        drawFish(x, y, 1);
+        drawRealFish(x, y, 1);
       } else {
-        drawFish(x, y, 0.08);
+        drawRealFish(x, y, 0.08);
       }
     }
 
-    const catX = p.map(s, 0, 59, 120, 520);
+    // cat moves from right to left within the hour
+    const catX = p.map(m + s / 60, 0, 60, 570, 120);
     const catY = 440;
-    drawNyanCat(catX, catY, 0.9);
+
+    drawNyanCatFacingLeft(catX, catY, 0.85);
   };
 
-  function drawFish(x, y, alpha) {
+  function drawRealFish(x, y, alpha) {
     p.push();
     p.translate(x, y);
 
-    p.stroke(20, 45, 80, 255 * alpha);
-    p.strokeWeight(4);
-    p.fill(55, 115, 205, 255 * alpha);
+    p.stroke(18, 45, 80, 255 * alpha);
+    p.strokeWeight(3);
+    p.fill(55, 125, 210, 255 * alpha);
 
-    p.ellipse(0, 0, 58, 32);
-    p.triangle(28, 0, 58, -22, 58, 22);
+    // body
+    p.ellipse(0, 0, 62, 34);
 
+    // tail
+    p.fill(45, 105, 190, 255 * alpha);
+    p.triangle(30, 0, 62, -24, 62, 24);
+
+    // top fin
+    p.fill(40, 95, 175, 220 * alpha);
+    p.triangle(-5, -15, 8, -30, 20, -12);
+
+    // belly fin
+    p.triangle(-2, 14, 12, 28, 22, 12);
+
+    // inner scale/fin
+    p.fill(35, 85, 165, 170 * alpha);
+    p.triangle(-5, 0, 20, -14, 20, 14);
+
+    // eye
+    p.fill(10, 255 * alpha);
     p.noStroke();
-    p.fill(35, 80, 160, 190 * alpha);
-    p.triangle(-4, 0, 17, -13, 17, 13);
+    p.circle(-22, -8, 7);
 
-    p.fill(20, 255 * alpha);
-    p.circle(-20, -8, 7);
+    // small highlight
+    p.fill(255, 255, 255, 80 * alpha);
+    p.ellipse(-8, -8, 25, 8);
 
     p.pop();
   }
 
-  function drawNyanCat(x, y, scaleSize) {
+  function drawNyanCatFacingLeft(x, y, scaleSize) {
     p.push();
     p.translate(x, y);
     p.scale(scaleSize);
 
-    // rainbow
+    // rainbow trail to the right, because cat moves left
     const colors = [
       [255, 0, 0],
       [255, 150, 0],
@@ -105,54 +130,53 @@ new p5(function (p) {
       p.noStroke();
       p.fill(colors[i][0], colors[i][1], colors[i][2]);
       const wave = p.sin(p.frameCount * 0.12 + i) * 4;
-      p.rect(-150, -30 + i * 9 + wave, 100, 8);
+      p.rect(45, -30 + i * 9 + wave, 110, 8);
     }
 
-    // body
+    // pop-tart body
     p.stroke(60);
     p.strokeWeight(3);
     p.fill(245, 170, 220);
     p.rect(-45, -30, 90, 60, 8);
 
-    // inner body
     p.noStroke();
-    p.fill(255, 200, 235);
+    p.fill(255, 205, 235);
     p.rect(-35, -20, 70, 40, 6);
 
     // sprinkles
     p.fill(255);
-    for (let i = 0; i < 8; i++) {
-      p.circle(-25 + i * 8, -10 + (i % 3) * 10, 3);
+    for (let i = 0; i < 9; i++) {
+      p.circle(-25 + i * 7, -10 + (i % 3) * 10, 3);
     }
 
-    // head
+    // head on LEFT side
     p.stroke(60);
     p.strokeWeight(3);
-    p.fill(170);
-    p.rect(35, -22, 48, 42, 8);
+    p.fill(165);
+    p.rect(-88, -24, 50, 45, 8);
 
     // ears
-    p.triangle(42, -22, 52, -42, 60, -22);
-    p.triangle(65, -22, 75, -42, 82, -22);
+    p.triangle(-82, -24, -72, -48, -62, -24);
+    p.triangle(-58, -24, -48, -48, -40, -24);
 
     // face
     p.noStroke();
-    p.fill(40);
-    p.circle(50, -5, 5);
-    p.circle(68, -5, 5);
+    p.fill(35);
+    p.circle(-74, -7, 5);
+    p.circle(-55, -7, 5);
 
-    p.stroke(40);
+    p.stroke(35);
     p.strokeWeight(2);
     p.noFill();
-    p.arc(59, 6, 16, 10, 0, p.PI);
+    p.arc(-64, 6, 18, 10, 0, p.PI);
 
     // legs
     p.noStroke();
     p.fill(130);
-    p.rect(-30, 30, 10, 15);
-    p.rect(-5, 30, 10, 15);
-    p.rect(20, 30, 10, 15);
-    p.rect(45, 30, 10, 15);
+    p.rect(-35, 30, 10, 16);
+    p.rect(-10, 30, 10, 16);
+    p.rect(15, 30, 10, 16);
+    p.rect(38, 30, 10, 16);
 
     p.pop();
   }
