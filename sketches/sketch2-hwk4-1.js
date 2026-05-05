@@ -4,7 +4,7 @@ new p5(function (p) {
 
   p.setup = function () {
     p.createCanvas(W, H);
-    p.textFont("-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial");
+    p.textFont("Georgia, 'Times New Roman', serif");
   };
 
   p.draw = function () {
@@ -16,31 +16,31 @@ new p5(function (p) {
 
     p.noStroke();
     p.fill(185, 192, 205);
-    p.quad(90, 430, 770, 430, 810, 465, 130, 465);
+    p.quad(70, 430, 790, 430, 835, 465, 115, 465);
 
     p.fill(255);
-    p.stroke(40);
+    p.stroke(35);
     p.strokeWeight(3);
-    p.rect(70, 70, 700, 360, 18);
+    p.rect(50, 55, 740, 375, 18);
 
     p.noStroke();
     p.fill(35);
-    p.textSize(24);
+    p.textSize(26);
     p.textStyle(p.BOLD);
     p.textAlign(p.LEFT);
-    p.text(formatDate(), 105, 115);
+    p.text(formatDate(), 90, 112);
     p.textStyle(p.NORMAL);
 
-    const chartX = 120;
-    const chartY = 150;
-    const chartW = 580;
-    const chartH = 190;
+    const chartX = 110;
+    const chartY = 160;
+    const chartW = 620;
+    const chartH = 185;
     const baseY = chartY + chartH * 0.78;
-
-    p.stroke(225);
+    
+    p.stroke(220);
     p.strokeWeight(1);
-    for (let i = 0; i <= 4; i++) {
-      const y = chartY + (chartH / 4) * i;
+    for (let i = 0; i <= 3; i++) {
+      const y = chartY + i * 48;
       p.line(chartX, y, chartX + chartW, y);
     }
 
@@ -48,118 +48,140 @@ new p5(function (p) {
     for (let x = 0; x <= chartW; x += 6) {
       const t = x / chartW;
 
-      const noonPeak = p.exp(-p.pow((t - 0.43) * 6.5, 2));
-      const secondPeak = p.exp(-p.pow((t - 0.58) * 8, 2));
+      const noonPeak = p.exp(-p.pow((t - 0.44) * 6.4, 2));
+      const secondPeak = p.exp(-p.pow((t - 0.57) * 8.2, 2));
       const afternoon = p.exp(-p.pow((t - 0.78) * 6, 2));
 
       const intensity =
-        0.08 + noonPeak * 0.9 + secondPeak * 0.55 + afternoon * 0.28;
+        0.08 + noonPeak * 0.88 + secondPeak * 0.52 + afternoon * 0.26;
 
-      // ocean-like flowing motion
       const flow =
-        p.sin(t * p.TWO_PI * 2.2 + p.millis() * 0.0012) * 10 +
-        p.sin(t * p.TWO_PI * 5.3 + p.millis() * 0.0018) * 5 +
-        p.noise(t * 4, p.millis() * 0.00035) * 12;
+        p.sin(t * p.TWO_PI * 2.1 + p.millis() * 0.0011) * 7 +
+        p.sin(t * p.TWO_PI * 5.2 + p.millis() * 0.0016) * 4;
 
-      const y = baseY - intensity * 120 + flow;
+      const y = baseY - intensity * 118 + flow;
       pts.push({ x: chartX + x, y, t, intensity });
     }
 
-    function drawSmoothShape(filterFn, fillColor) {
+    function drawArea(filterFn, col) {
       p.noStroke();
-      p.fill(fillColor);
+      p.fill(col);
       p.beginShape();
+
       p.vertex(chartX, baseY);
+      p.curveVertex(chartX, baseY);
 
       for (let pt of pts) {
         const y = filterFn(pt) ? pt.y : baseY;
         p.curveVertex(pt.x, y);
       }
 
+      p.curveVertex(chartX + chartW, baseY);
       p.vertex(chartX + chartW, baseY);
       p.endShape(p.CLOSE);
     }
 
-    drawSmoothShape(() => true, p.color(55, 120, 200, 210));
-    drawSmoothShape((pt) => pt.intensity > 0.62, p.color(220, 65, 65, 220));
+    drawArea(() => true, p.color(55, 120, 200, 210));
 
+    drawArea((pt) => pt.intensity > 0.62, p.color(220, 65, 65, 225));
+
+    p.noFill();
+    p.stroke(255, 255, 255, 85);
+    p.strokeWeight(2);
+    p.beginShape();
+    for (let pt of pts) {
+      p.curveVertex(pt.x, pt.y + 18);
+    }
+    p.endShape();
+
+    // Outline
     p.noFill();
     p.stroke(25);
     p.strokeWeight(4);
     p.beginShape();
-    for (let i = 0; i < pts.length; i++) {
-      p.curveVertex(pts[i].x, pts[i].y);
-    }
-    p.endShape();
-
-    // subtle highlight wave line
-    p.noFill();
-    p.stroke(255, 255, 255, 70);
-    p.strokeWeight(2);
-    p.beginShape();
+    p.curveVertex(pts[0].x, pts[0].y);
     for (let pt of pts) {
-      p.curveVertex(pt.x, pt.y + 12);
+      p.curveVertex(pt.x, pt.y);
     }
+    p.curveVertex(pts[pts.length - 1].x, pts[pts.length - 1].y);
     p.endShape();
 
-    p.stroke(140);
+    // Baseline
+    p.stroke(145);
     p.strokeWeight(2);
     p.line(chartX, baseY, chartX + chartW, baseY);
 
-    const dayProgress = p.map(h + m / 60 + s / 3600, 9, 18, 0, 1, true);
-    const currentX = chartX + dayProgress * chartW;
-
-    p.stroke(40);
-    p.strokeWeight(2);
-    p.line(currentX, chartY, currentX, baseY + 24);
-    p.noStroke();
-    p.fill(40);
-    p.circle(currentX, baseY + 24, 9);
-
     p.textAlign(p.CENTER);
-    p.textSize(12);
-    p.fill(80);
+    p.textSize(14);
+    p.fill(70);
 
     for (let hr = 9; hr <= 18; hr++) {
       const t = (hr - 9) / 9;
       const x = chartX + t * chartW;
 
-      p.stroke(120);
+      p.stroke(70);
       p.strokeWeight(1);
-      p.line(x, baseY, x, baseY + 8);
+      p.line(x, baseY, x, baseY + 14);
 
       p.noStroke();
       p.fill(60);
-      p.circle(x, baseY + 12, 4);
+      p.circle(x, baseY + 16, 3);
 
-      p.fill(80);
       let label;
       if (hr === 12) label = "12PM";
       else if (hr > 12) label = hr - 12 + "PM";
       else label = hr + "AM";
 
-      p.text(label, x, baseY + 32);
+      p.fill(70);
+      p.text(label, x, baseY + 38);
     }
 
-    p.textAlign(p.LEFT);
+    const dayProgress = p.map(h + m / 60 + s / 3600, 9, 18, 0, 1, true);
+    const currentX = chartX + dayProgress * chartW;
+
+    p.stroke(35);
+    p.strokeWeight(2);
+    p.line(currentX, chartY, currentX, baseY + 24);
+
+    p.noStroke();
+    p.fill(35);
+    p.circle(currentX, baseY + 24, 6);
+
+    const currentT = p.constrain(dayProgress, 0, 1);
+    const currentIntensity =
+      0.08 +
+      p.exp(-p.pow((currentT - 0.44) * 6.4, 2)) * 0.88 +
+      p.exp(-p.pow((currentT - 0.57) * 8.2, 2)) * 0.52 +
+      p.exp(-p.pow((currentT - 0.78) * 6, 2)) * 0.26;
+
+    const loadStatus = currentIntensity > 0.62 ? "High" : "Normal";
+
+    p.textAlign(p.RIGHT);
     p.textSize(15);
+    p.textStyle(p.BOLD);
+    p.fill(currentIntensity > 0.62 ? p.color(220, 65, 65) : p.color(55, 120, 200));
+    p.text("Current Load: " + loadStatus, 760, 112);
     p.textStyle(p.NORMAL);
+
+    p.textAlign(p.LEFT);
+    p.textSize(17);
 
     p.noStroke();
     p.fill(55, 120, 200);
-    p.rect(110, 390, 14, 14);
-    p.fill(60);
-    p.text("Normal Meeting Load", 132, 403);
+    p.rect(110, 390, 16, 16);
+    p.fill(55);
+    p.text("Normal Meeting Load", 140, 405);
 
     p.fill(220, 65, 65);
-    p.rect(310, 390, 14, 14);
-    p.fill(60);
-    p.text("Peak Meeting Intensity", 332, 403);
+    p.rect(355, 390, 16, 16);
+    p.fill(55);
+    p.text("Peak Meeting Intensity", 385, 405);
 
-    p.textSize(26);
+    p.textSize(30);
     p.textStyle(p.BOLD);
     p.fill(30);
-    p.text(formatTime(h, m, s), 610, 406);
+    p.textAlign(p.RIGHT);
+    p.text(formatTime(h, m, s), W - 40, 420);
     p.textStyle(p.NORMAL);
   };
 
@@ -174,11 +196,12 @@ new p5(function (p) {
   }
 
   function formatDate() {
-    const d = new Date();
-    const months = [
-      "January", "February", "March", "April", "May", "June",
-      "July", "August", "September", "October", "November", "December"
-    ];
-    return months[d.getMonth()] + " " + d.getDate();
+    const d = new Date(2026, 4, 4);
+    return d.toLocaleDateString("en-US", {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+      year: "numeric"
+    });
   }
 });
