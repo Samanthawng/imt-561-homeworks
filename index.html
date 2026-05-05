@@ -1,216 +1,132 @@
-<!DOCTYPE html>
-<html lang="en">
+<section id="tab1" class="tab-content active" role="tabpanel">
+  <div class="welcome-template" aria-labelledby="welcome-title">
+    <h2 id="welcome-title">Welcome to My IMT 561 Portfolio</h2>
 
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/p5.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/p5@1.11.10/lib/addons/p5.sound.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="style.css">
-  <title>IMT 561 Portfolio | Data Visualization: Design And Development</title>
-</head>
-
-<body>
-  <main>
-    <button id="tabs-visibility-toggle" class="tabs-visibility-toggle" type="button" aria-controls="main-tabs"
-      aria-pressed="false">Hide tabs</button>
-
-    <nav id="main-tabs" class="tabs" role="tablist" aria-label="Main tabs">
-      <button type="button" class="tab-btn active" data-target="tab1" role="tab" aria-selected="true">Welcome</button>
-
-      <button type="button" class="tab-btn" data-target="tab2" data-sketch="sk2" role="tab">HWK 4.1</button>
-      <button type="button" class="tab-btn" data-target="tab3" data-sketch="sk3" role="tab">HWK 4.2</button>
-
-      <button type="button" class="tab-btn" data-target="tab5" data-sketch="sk5" role="tab">Ex 1</button>
-      <button type="button" class="tab-btn" data-target="tab6" data-sketch="sk6" role="tab">Ex 2</button>
-      <button type="button" class="tab-btn" data-target="tab8" data-sketch="sk8" role="tab">Ex 3</button>
-      <button type="button" class="tab-btn" data-target="tab9" data-sketch="sk9" role="tab">Ex 4</button>
-      <button type="button" class="tab-btn" data-target="tab10" data-sketch="sk10" role="tab">Ex 5</button>
-      <button type="button" class="tab-btn" data-target="tab11" data-sketch="sk11" role="tab">Ex 6</button>
-      <button type="button" class="tab-btn" data-target="tab12" data-sketch="sk12" role="tab">Ex 7</button>
-      <button type="button" class="tab-btn" data-target="tab13" data-sketch="sk13" role="tab">Ex 8</button>
-      <button type="button" class="tab-btn" data-target="tab14" data-sketch="sk14" role="tab">Ex 9</button>
-      <button type="button" class="tab-btn tab-btn-highlight" data-target="tab16" data-sketch="sk16" role="tab">Ex 10 **</button>
-      <button type="button" class="tab-btn tab-btn-highlight" data-target="tab17" data-sketch="sk17" role="tab">Ex 11 **</button>
-      <button type="button" class="tab-btn tab-btn-highlight" data-target="tab18" data-sketch="sk18" role="tab">Ex 12 **</button>
-      <button type="button" class="tab-btn" data-target="tab15" data-sketch="sk15" role="tab">HWK 5</button>
-    </nav>
-
-    <!-- Welcome -->
-    <section id="tab1" class="tab-content active" role="tabpanel">
-      <div class="welcome-template" aria-labelledby="welcome-title">
-        <h2 id="welcome-title">Welcome to My IMT 561 Portfolio</h2>
-
-        <div class="welcome-profile">
-          <div class="welcome-photo">
-            <img src="images/profile.jpg" alt="Photo of Samantha Wang" />
-          </div>
-
-          <div class="welcome-copy">
-            <p><strong>Samantha Wang</strong></p>
-            <p>I am a master’s student in Information Management at the University of Washington, focusing on Data Science and Business Intelligence.</p>
-            <p>This quarter, I want to improve my ability to turn data into clear, engaging, and interactive visual stories.</p>
-            <p>One topic I am excited to visualize is music listening behavior, because it connects personal preferences, daily routines, and broader patterns in digital media use.</p>
-          </div>
-        </div>
+    <div class="welcome-profile">
+      <div class="welcome-photo">
+        <img src="images/profile.jpg" alt="Photo of Samantha Wang" />
       </div>
-    </section>
 
-    <!-- HWK 4.1: Meeting Wave Clock -->
-    <section id="tab2" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk2" class="sketch-container"></div>
+      <div class="welcome-copy">
+        <p><strong>Samantha Wang</strong></p>
+        <p>I am a master’s student in Information Management at the University of Washington, focusing on Data Science and Business Intelligence.</p>
 
-      <div id="sketch-drawing-sk2" class="sketch-evolution">
-        <div class="welcome-template hwk-template" aria-labelledby="sk2-notes-title">
-          <h3 id="sk2-notes-title">Documenting Iterative Process</h3>
+        <p>
+          In this course, I explore how to design time-based visualizations that make information intuitive, engaging, and easy to interpret.
+        </p>
 
-          <p>
-            <strong>Context of use:</strong> This clock is designed for meeting-heavy workdays. It helps working professionals quickly understand when their day becomes busy without reading each calendar event. I chose this context because I often need a fast, low-stress way to understand workload during focused school and work sessions.
-          </p>
-
-          <article class="clock-template">
-            <h4>Final Clock 1 — Meeting Wave Clock</h4>
-            <p class="small-note">Sketch iteration documentation (paper / hand-drawn photos)</p>
-
-            <div class="iteration-grid">
-              <figure class="iteration-item">
-                <img src="images/meeting-wave-sketch.jpg" alt="Meeting Wave Clock hand-drawn sketch">
-                <figcaption>Initial sketch: meeting load is represented as a wave across the workday.</figcaption>
-              </figure>
-
-              <figure class="iteration-item">
-                <img src="images/meeting-wave-final.png" alt="Meeting Wave Clock final digital design">
-                <figcaption>Final version: clearer wave shape, stronger red/blue contrast, and improved time axis.</figcaption>
-              </figure>
-            </div>
-
-            <p>
-              <strong>Design process:</strong> I designed time as a continuous workload wave instead of separate calendar blocks. Based on feedback, I simplified the wave shape, improved the red/blue contrast, and made the time axis clearer so users can quickly identify peak meeting periods. I applied readability, visual hierarchy, color contrast, and motion to make the clock easy to scan.
-            </p>
-
-            <p>
-              <strong>Time encoding:</strong> Hour is shown through the wave trend across the day; minute is represented by wave amplitude and meeting intensity; second is shown through subtle motion; red highlights peak meeting density.
-            </p>
-
-            <p>
-              <strong>Self-reflection / future work:</strong> I would connect this clock to real calendar data so the wave reflects actual meetings. I would also add hover details for each meeting period so users can inspect specific events without cluttering the main view.
-            </p>
-          </article>
-        </div>
+        <p>
+          This portfolio presents my iterative design process, from early sketches to refined clock visualizations. I focus on transforming abstract time into visual forms that support quick understanding and meaningful interaction.
+        </p>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
-    <!-- HWK 4.2: Cat & Fish Clock -->
-    <section id="tab3" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk3" class="sketch-container"></div>
+<!-- HWK 4.1: Meeting Wave Clock -->
+<section id="tab2" class="tab-content" role="tabpanel">
+  <div id="sketch-container-sk2" class="sketch-container"></div>
 
-      <div id="sketch-drawing-sk3" class="sketch-evolution">
-        <div class="welcome-template hwk-template" aria-labelledby="sk3-notes-title">
-          <h3 id="sk3-notes-title">Documenting Iterative Process</h3>
+  <div id="sketch-drawing-sk2" class="sketch-evolution">
+    <div class="welcome-template hwk-template" aria-labelledby="sk2-notes-title">
+      <h3 id="sk2-notes-title">Documenting Iterative Process</h3>
 
-          <p>
-            <strong>Context of use:</strong> This clock is designed for focused work sessions. I chose this context because I often lose track of time while working and wanted a less stressful alternative to countdown timers. The design helps users stay aware of time while keeping the experience playful and motivating.
-          </p>
+      <p>
+        <strong>Context of use:</strong> This clock is designed for meeting-heavy workdays. It acts as a lightweight calendar dashboard that allows users to quickly understand how busy their day is without reading individual events. This is especially useful during focused work sessions when users want awareness without distraction.
+      </p>
 
-          <article class="clock-template">
-            <h4>Final Clock 2 — Cat & Fish Clock</h4>
-            <p class="small-note">Sketch iteration documentation (paper / hand-drawn photos)</p>
+      <article class="clock-template">
+        <h4>Final Clock 1 — Meeting Wave Clock</h4>
+        <p class="small-note">Sketch iteration documentation (paper / hand-drawn photos)</p>
 
-            <div class="iteration-grid">
-              <figure class="iteration-item">
-                <img src="images/cat-fish-sketch.jpg" alt="Cat and Fish Clock hand-drawn sketch">
-                <figcaption>Initial sketch: fish act as time units, and the cat becomes the moving time marker.</figcaption>
-              </figure>
+        <div class="iteration-grid">
+          <figure class="iteration-item">
+            <img src="images/meeting-wave-sketch.jpg" alt="Meeting Wave Clock hand-drawn sketch">
+            <figcaption>Iteration 1: Initial concept exploring meetings as a continuous wave instead of discrete time blocks.</figcaption>
+          </figure>
 
-              <figure class="iteration-item">
-                <img src="images/cat-fish-final.png" alt="Cat and Fish Clock final digital design">
-                <figcaption>Final version: structured fish grid, large timer, and animated cat movement.</figcaption>
-              </figure>
-            </div>
-
-            <p>
-              <strong>Design process:</strong> I selected Cat & Fish Clock because it is the most memorable and engaging concept. Based on feedback, I made the fish layout more structured, enlarged the current time display, aligned the cat’s movement with the disappearing fish, and simplified the visuals to improve clarity. I applied layout, hierarchy, motion, and playful visual metaphor to make time easier to perceive.
-            </p>
-
-            <p>
-              <strong>Time encoding:</strong> Hour is represented as one full reset cycle; minute is shown through the number of remaining fish; second is represented by the cat’s movement and eating animation.
-            </p>
-
-            <p>
-              <strong>Self-reflection / future work:</strong> I would improve this by adding smoother eating transitions so the fish disappear more naturally. I would also add a small hover interaction explaining which time unit each fish represents.
-            </p>
-          </article>
+          <figure class="iteration-item">
+            <img src="images/meeting-wave-final.png" alt="Meeting Wave Clock final design">
+            <figcaption>Iteration 2 → Final: refined wave shape, added red/blue contrast, and improved time axis clarity.</figcaption>
+          </figure>
         </div>
-      </div>
-    </section>
 
-    <!-- Examples -->
-    <section id="tab5" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk5" class="sketch-container"></div>
-    </section>
+        <p>
+          <strong>Design process:</strong> The design evolved through multiple iterations. In the initial sketch, I explored representing meetings as a continuous wave instead of separate calendar blocks to better reflect workload flow. However, the early version made it difficult to distinguish between normal and peak periods.
 
-    <section id="tab6" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk6" class="sketch-container"></div>
-    </section>
+          In the second iteration, I introduced color encoding (blue for normal, red for peak) to highlight high-intensity meeting periods. I refined the wave shape and aligned the time axis more clearly with the workday timeline.
 
-    <section id="tab7" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk7" class="sketch-container"></div>
-    </section>
+          In the final version, I simplified the layout and reduced visual clutter so users can quickly scan their day at a glance. These decisions were guided by readability, visual hierarchy, color contrast, and pattern recognition principles.
+        </p>
 
-    <section id="tab8" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk8" class="sketch-container"></div>
-    </section>
+        <p>
+          <strong>Time encoding:</strong><br>
+          Hour: overall wave trend across the day<br>
+          Minute: wave amplitude reflects meeting intensity<br>
+          Second: subtle motion indicates real-time progression<br>
+          Peak: red color highlights high meeting density
+        </p>
 
-    <section id="tab9" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk9" class="sketch-container"></div>
-    </section>
+        <p>
+          <strong>Self-reflection / future work:</strong> One limitation is that the wave currently represents an abstract pattern rather than real calendar data. In future iterations, I would connect it to live calendar data.
 
-    <section id="tab10" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk10" class="sketch-container"></div>
-    </section>
+          I would also add hover interaction to allow users to inspect specific time periods without cluttering the main view.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
 
-    <section id="tab11" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk11" class="sketch-container"></div>
-      <p>Adapted from Golan Levin, 2016-2018</p>
-    </section>
 
-    <section id="tab12" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk12" class="sketch-container"></div>
-    </section>
+<!-- HWK 4.2: Cat & Fish Clock -->
+<section id="tab3" class="tab-content" role="tabpanel">
+  <div id="sketch-container-sk3" class="sketch-container"></div>
 
-    <section id="tab13" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk13" class="sketch-container"></div>
-    </section>
+  <div id="sketch-drawing-sk3" class="sketch-evolution">
+    <div class="welcome-template hwk-template" aria-labelledby="sk3-notes-title">
+      <h3 id="sk3-notes-title">Documenting Iterative Process</h3>
 
-    <section id="tab14" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk14" class="sketch-container"></div>
-    </section>
+      <p>
+        <strong>Context of use:</strong> This clock is designed for focused work sessions. It works as a desktop widget or lightweight focus timer that helps users stay aware of time without the pressure of a countdown timer.
+      </p>
 
-    <section id="tab16" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk16" class="sketch-container"></div>
-    </section>
+      <article class="clock-template">
+        <h4>Final Clock 2 — Cat & Fish Clock</h4>
+        <p class="small-note">Sketch iteration documentation (paper / hand-drawn photos)</p>
 
-    <section id="tab17" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk17" class="sketch-container"></div>
-    </section>
+        <div class="iteration-grid">
+          <figure class="iteration-item">
+            <img src="images/cat-fish-sketch.jpg" alt="Cat and Fish Clock sketch">
+            <figcaption>Iteration 1: playful concept using fish as time units and a moving cat as indicator.</figcaption>
+          </figure>
 
-    <section id="tab18" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk18" class="sketch-container"></div>
-    </section>
-
-    <!-- Homework 5 -->
-    <section id="tab15" class="tab-content" role="tabpanel">
-      <div id="sketch-container-sk15" class="sketch-container"></div>
-      <div id="sketch-drawing-sk15" class="sketch-evolution">
-        <div class="welcome-template hwk-template" aria-labelledby="sk15-notes-title">
-    
+          <figure class="iteration-item">
+            <img src="images/cat-fish-final.png" alt="Cat and Fish Clock final design">
+            <figcaption>Iteration 2 → Final: structured grid layout, larger timer, and clearer mapping between fish and time.</figcaption>
+          </figure>
         </div>
-      </div>
-    </section>
 
-  </main>
+        <p>
+          <strong>Design process:</strong> This design evolved through several iterations. In the initial sketch, I explored representing time as a sequence of fish that gradually disappear, with the cat acting as a moving indicator. While engaging, the early layout felt unstructured and slightly difficult to interpret.
 
-  <script src="script.js"></script>
-</body>
+          In the second iteration, I organized the fish into a grid layout to improve readability. I also enlarged the main time display so users can quickly understand the exact time.
 
-</html>
+          In the final version, I aligned the cat’s movement with the disappearance of fish and simplified visual elements. These changes improved clarity while maintaining a playful experience. The design applies hierarchy, layout, motion, and metaphor to communicate time.
+        </p>
+
+        <p>
+          <strong>Time encoding:</strong><br>
+          Hour: one full reset cycle<br>
+          Minute: number of remaining fish<br>
+          Second: cat movement / eating animation
+        </p>
+
+        <p>
+          <strong>Self-reflection / future work:</strong> One limitation is that the mapping between fish and time may not be immediately clear to new users. In future iterations, I would add subtle onboarding cues.
+
+          I would also improve the animation so fish disappear more smoothly and the cat’s movement feels more natural.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
