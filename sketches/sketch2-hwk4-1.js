@@ -14,6 +14,12 @@ new p5(function (p) {
     const m = p.minute();
     const s = p.second();
 
+    const cardX = 50;
+    const cardY = 55;
+    const cardW = 740;
+    const cardH = 375;
+    const cardRight = cardX + cardW;
+    
     p.noStroke();
     p.fill(185, 192, 205);
     p.quad(70, 430, 790, 430, 835, 465, 115, 465);
@@ -21,7 +27,7 @@ new p5(function (p) {
     p.fill(255);
     p.stroke(35);
     p.strokeWeight(3);
-    p.rect(50, 55, 740, 375, 18);
+    p.rect(cardX, cardY, cardW, cardH, 18);
 
     p.noStroke();
     p.fill(35);
@@ -30,13 +36,13 @@ new p5(function (p) {
     p.textAlign(p.LEFT);
     p.text(formatDate(), 90, 112);
     p.textStyle(p.NORMAL);
-
+    
     const chartX = 110;
     const chartY = 160;
     const chartW = 620;
     const chartH = 185;
     const baseY = chartY + chartH * 0.78;
-    
+
     p.stroke(220);
     p.strokeWeight(1);
     for (let i = 0; i <= 3; i++) {
@@ -94,7 +100,6 @@ new p5(function (p) {
     }
     p.endShape();
 
-    // Outline
     p.noFill();
     p.stroke(25);
     p.strokeWeight(4);
@@ -106,7 +111,6 @@ new p5(function (p) {
     p.curveVertex(pts[pts.length - 1].x, pts[pts.length - 1].y);
     p.endShape();
 
-    // Baseline
     p.stroke(145);
     p.strokeWeight(2);
     p.line(chartX, baseY, chartX + chartW, baseY);
@@ -141,11 +145,11 @@ new p5(function (p) {
 
     p.stroke(35);
     p.strokeWeight(2);
-    p.line(currentX, chartY, currentX, baseY + 24);
+    p.line(currentX, chartY, currentX, baseY + 18);
 
     p.noStroke();
     p.fill(35);
-    p.circle(currentX, baseY + 24, 6);
+    p.circle(currentX, baseY + 18, 6);
 
     const currentT = p.constrain(dayProgress, 0, 1);
     const currentIntensity =
@@ -159,8 +163,12 @@ new p5(function (p) {
     p.textAlign(p.RIGHT);
     p.textSize(15);
     p.textStyle(p.BOLD);
-    p.fill(currentIntensity > 0.62 ? p.color(220, 65, 65) : p.color(55, 120, 200));
-    p.text("Current Load: " + loadStatus, 760, 112);
+    p.fill(
+      currentIntensity > 0.62
+        ? p.color(220, 65, 65)
+        : p.color(55, 120, 200)
+    );
+    p.text("Current Load: " + loadStatus, cardRight - 30, 112);
     p.textStyle(p.NORMAL);
 
     p.textAlign(p.LEFT);
@@ -181,7 +189,7 @@ new p5(function (p) {
     p.textStyle(p.BOLD);
     p.fill(30);
     p.textAlign(p.RIGHT);
-    p.text(formatTime(h, m, s), W - 40, 420);
+    p.text(formatTime(h, m, s), cardRight - 30, 410);
     p.textStyle(p.NORMAL);
   };
 
