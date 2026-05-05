@@ -1,4 +1,4 @@
-new p5(function (p) {
+registerSketch('sk3', function (p) {
   const W = 900;
   const H = 560;
   const totalFish = 24;
