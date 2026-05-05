@@ -26,19 +26,20 @@ new p5(function (p) {
     p.strokeWeight(4);
     p.rect(40, 40, 790, 445, 22);
 
-    // right-side timer block
+    // large current timer
     p.noStroke();
     p.fill(30);
     p.textAlign(p.CENTER);
     p.textStyle(p.BOLD);
-    p.textSize(72);
-    p.text(formatTime(h, m), 690, 150);
+    p.textSize(82);
+    p.text(formatTime(h, m), 675, 150);
 
+    // date + weekday
     p.textStyle(p.NORMAL);
-    p.textSize(28);
+    p.textSize(26);
     p.fill(55);
-    p.text("May 4, 2026", 690, 205);
-    p.text("Monday", 690, 245);
+    p.text("May 4, 2026", 675, 205);
+    p.text("Monday", 675, 245);
 
     // fish grid: 6 rows x 4 columns
     const cols = 4;
@@ -76,30 +77,33 @@ new p5(function (p) {
     p.push();
     p.translate(x, y);
 
-    p.stroke(20, 45, 80, 255 * alpha);
+    p.stroke(25, 55, 95, 255 * alpha);
     p.strokeWeight(3);
-    p.fill(70, 135, 220, 255 * alpha);
+    p.fill(75, 135, 220, 255 * alpha);
 
-    // cute round body
-    p.ellipse(0, 0, 54, 34);
+    // round body
+    p.ellipse(0, 0, 56, 34);
 
-    // small tail
-    p.triangle(25, 0, 48, -18, 48, 18);
+    // cute tail
+    p.triangle(25, 0, 52, -18, 52, 18);
 
     // eye
     p.noStroke();
+    p.fill(255, 255 * alpha);
+    p.circle(-16, -7, 10);
     p.fill(20, 255 * alpha);
-    p.circle(-16, -7, 6);
-
-    // highlight
-    p.fill(255, 255, 255, 90 * alpha);
-    p.circle(-3, -8, 10);
+    p.circle(-17, -7, 5);
 
     // smile
     p.noFill();
-    p.stroke(20, 45, 80, 180 * alpha);
+    p.stroke(25, 55, 95, 255 * alpha);
     p.strokeWeight(2);
-    p.arc(-12, 4, 14, 8, 0, p.PI);
+    p.arc(-12, 5, 16, 10, 0, p.PI);
+
+    // small fin
+    p.noStroke();
+    p.fill(45, 100, 190, 180 * alpha);
+    p.ellipse(7, 3, 18, 10);
 
     p.pop();
   }
@@ -109,7 +113,7 @@ new p5(function (p) {
     p.translate(x, y);
     p.scale(scaleSize);
 
-    // rainbow trail to the right
+    // rainbow trail to the right, because cat moves left
     const colors = [
       [255, 0, 0],
       [255, 150, 0],
@@ -142,32 +146,42 @@ new p5(function (p) {
       p.circle(-25 + i * 7, -10 + (i % 3) * 10, 3);
     }
 
-    // round cat head
+    // head on LEFT side
     p.stroke(60);
     p.strokeWeight(3);
     p.fill(165);
-    p.circle(-62, -10, 58);
+    p.rect(-88, -24, 50, 45, 8);
 
     // ears
-    p.triangle(-82, -30, -72, -58, -60, -30);
-    p.triangle(-58, -30, -45, -58, -38, -30);
+    p.triangle(-82, -24, -72, -48, -62, -24);
+    p.triangle(-58, -24, -48, -48, -40, -24);
 
-    // eyes
+    // cat eyes
     p.noStroke();
+    p.fill(255);
+    p.ellipse(-74, -8, 11, 8);
+    p.ellipse(-55, -8, 11, 8);
+
     p.fill(35);
-    p.circle(-72, -12, 5);
-    p.circle(-53, -12, 5);
+    p.ellipse(-74, -8, 5, 7);
+    p.ellipse(-55, -8, 5, 7);
 
-    // blush
-    p.fill(255, 120, 145);
-    p.circle(-80, 2, 10);
-    p.circle(-45, 2, 10);
+    // nose
+    p.fill(80);
+    p.triangle(-66, 1, -62, 1, -64, 5);
 
-    // smile
+    // mouth
     p.noFill();
     p.stroke(35);
     p.strokeWeight(2);
-    p.arc(-62, 2, 20, 12, 0, p.PI);
+    p.arc(-68, 7, 10, 8, 0, p.PI);
+    p.arc(-60, 7, 10, 8, 0, p.PI);
+
+    // whiskers
+    p.line(-82, 2, -96, -2);
+    p.line(-82, 7, -96, 7);
+    p.line(-46, 2, -32, -2);
+    p.line(-46, 7, -32, 7);
 
     // legs
     p.noStroke();
