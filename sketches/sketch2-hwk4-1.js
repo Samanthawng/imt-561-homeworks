@@ -11,18 +11,22 @@ registerSketch('sk2', function (p) {
   };
 
   p.draw = function () {
-    p.background(255);
-    p.noStroke();
-    p.fill(100, 150, 240);
-    p.textSize(32);
-    p.textAlign(p.CENTER, p.CENTER);
-    p.text('HWK #4. A', p.width / 2, p.height / 2);
+    p.background(242, 244, 248);
+    const h = p.hour();
+    const m = p.minute();
+    const s = p.second();
 
-    // Draw frame as part of the sketch output.
-    p.noFill();
-    p.stroke(0);
-    p.strokeWeight(1);
-    p.rect(0, 0, p.width - 1, p.height - 1);
+    const cardX = 50;
+    const cardY = 55;
+    const cardW = 740;
+    const cardH = 375;
+    const cardRight = cardX + cardW;
+    
+    p.noStroke();
+    p.fill(185, 192, 205);
+    p.quad(70, 430, 790, 430, 835, 465, 115, 465);
+
+
   };
 
   p.windowResized = function () { p.resizeCanvas(CANVAS_SIZE, CANVAS_SIZE); };
