@@ -26,6 +26,11 @@ registerSketch('sk2', function (p) {
     p.fill(185, 192, 205);
     p.quad(70, 430, 790, 430, 835, 465, 115, 465);
 
+    p.fill(255);
+    p.stroke(35);
+    p.strokeWeight(3);
+    p.rect(cardX, cardY, cardW, cardH, 18);
+
 
   };
 
