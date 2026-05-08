@@ -59,3 +59,16 @@ registerSketch('sk2', function (p) {
     year: "numeric"
   });
 }
+  const chartX = 110;
+const chartY = 160;
+const chartW = 620;
+const chartH = 185;
+const baseY = chartY + chartH * 0.78;
+
+p.stroke(220);
+p.strokeWeight(1);
+
+for (let i = 0; i <= 3; i++) {
+  const y = chartY + i * 48;
+  p.line(chartX, y, chartX + chartW, y);
+}
