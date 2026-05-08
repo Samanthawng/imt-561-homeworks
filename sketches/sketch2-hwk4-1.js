@@ -100,3 +100,24 @@ for (let hr = 9; hr <= 18; hr++) {
   p.fill(70);
   p.text(label, x, baseY + 38);
 }
+
+let pts = [];
+
+for (let x = 0; x <= chartW; x += 6) {
+  const t = x / chartW;
+
+  const noonPeak = p.exp(-p.pow((t - 0.44) * 6.4, 2));
+  const secondPeak = p.exp(-p.pow((t - 0.57) * 8.2, 2));
+  const afternoon = p.exp(-p.pow((t - 0.78) * 6, 2));
+
+  const intensity =
+    0.08 + noonPeak * 0.88 + secondPeak * 0.52 + afternoon * 0.26;
+
+  const flow =
+    p.sin(t * p.TWO_PI * 2.1 + p.millis() * 0.0011) * 7 +
+    p.sin(t * p.TWO_PI * 5.2 + p.millis() * 0.0016) * 4;
+
+  const y = baseY - intensity * 118 + flow;
+
+  pts.push({ x: chartX + x, y });
+}
