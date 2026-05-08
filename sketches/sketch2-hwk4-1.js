@@ -1,11 +1,12 @@
 // Instance-mode sketch for tab 2
 registerSketch('sk2', function (p) {
   const CANVAS_SIZE = 800;
+  const W = 900; 
+  const H = 560;
 
   p.setup = function () {
-    p.createCanvas(CANVAS_SIZE, CANVAS_SIZE);
-    p.textFont("Georgia, 'Times New Roman', serif");
-  };
+    p.createCanvas(W, H); 
+    p.textFont("Georgia, 'Times New Roman', serif"); };
 
   p.draw = function () {
     p.background(242, 244, 248);
@@ -14,21 +15,21 @@ registerSketch('sk2', function (p) {
     const m = p.minute();
     const s = p.second();
 
-    const cardX = 50;
-    const cardY = 80;
-    const cardW = 700;
-    const cardH = 550;
+    const cardX = 40;
+    const cardY = 50;
+    const cardW = 760;
+    const cardH = 470;
     const cardRight = cardX + cardW;
 
-    const chartX = 100;
-    const chartY = 200;
-    const chartW = 600;
-    const chartH = 300;
+    const chartX = 95;
+    const chartY = 155;
+    const chartW = 680;
+    const chartH = 230;
     const baseY = chartY + chartH * 0.78;
 
     p.noStroke();
     p.fill(185, 192, 205);
-    p.quad(70, 430, 790, 430, 835, 465, 115, 465);
+    p.quad(90, 515, 770, 515, 820, 555, 140, 555);
 
     p.fill(255);
     p.stroke(35);
@@ -183,7 +184,7 @@ p.textSize(30);
 p.textStyle(p.BOLD);
 p.noStroke();
 p.fill(30);
-p.text(formatTime(h, m, s), cardRight - 30, 405);
+p.text(formatTime(h, m, s), cardRight - 35, cardY + cardH - 45);
 p.pop();
   };
 
