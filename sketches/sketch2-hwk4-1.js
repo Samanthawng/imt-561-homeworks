@@ -21,7 +21,7 @@ registerSketch('sk2', function (p) {
     const cardW = 740;
     const cardH = 375;
     const cardRight = cardX + cardW;
-    
+
     p.noStroke();
     p.fill(185, 192, 205);
     p.quad(70, 430, 790, 430, 835, 465, 115, 465);
@@ -31,8 +31,31 @@ registerSketch('sk2', function (p) {
     p.strokeWeight(3);
     p.rect(cardX, cardY, cardW, cardH, 18);
 
+    p.noStroke();
+    p.fill(35);
+    p.textSize(26);
+    p.textStyle(p.BOLD);
+    p.textAlign(p.LEFT);
+    p.text(formatDate(), 90, 112);
+    p.textStyle(p.NORMAL);
 
+    p.textAlign(p.RIGHT);
+    p.textSize(15);
+    p.textStyle(p.BOLD);
+    p.fill(55, 120, 200);
+    p.text("Current Load: Normal", cardRight - 30, 112);
+    p.textStyle(p.NORMAL);
   };
 
-  p.windowResized = function () { p.resizeCanvas(CANVAS_SIZE, CANVAS_SIZE); };
+  p.windowResized = function () { 
+    p.resizeCanvas(CANVAS_SIZE, CANVAS_SIZE); };
 });
+  function formatDate() {
+  const d = new Date();
+  return d.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric"
+  });
+}
