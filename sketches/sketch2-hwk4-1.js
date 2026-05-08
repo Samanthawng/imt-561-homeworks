@@ -29,7 +29,8 @@ registerSketch('sk2', function (p) {
 
     p.noStroke();
     p.fill(185, 192, 205);
-    p.quad(90, 515, 770, 515, 820, 555, 140, 555);
+    p.quad(cardX + 55, cardY + cardH, cardX + cardW - 15, cardY + cardH,
+       cardX + cardW + 35, cardY + cardH + 40, cardX + 95, cardY + cardH + 40);
 
     p.fill(255);
     p.stroke(35);
@@ -41,7 +42,7 @@ registerSketch('sk2', function (p) {
     p.textSize(26);
     p.textStyle(p.BOLD);
     p.textAlign(p.LEFT, p.CENTER);
-    p.text(formatDate(), 90, 112);
+    p.text(formatDate(), cardX + 50, cardY + 58);
     p.textStyle(p.NORMAL);
 
     p.stroke(220);
@@ -157,14 +158,13 @@ const currentIntensity =
 
 const loadStatus = currentIntensity > 0.62 ? "High" : "Normal";
 
-// fixed: no bold, no black stroke
 p.push();
 p.textAlign(p.RIGHT, p.CENTER);
-p.textSize(15);
-p.textStyle(p.NORMAL);
+p.textSize(17);
+p.textStyle(p.BOLD);
 p.noStroke();
 p.fill(currentIntensity > 0.62 ? p.color(220, 65, 65) : p.color(55, 120, 200));
-p.text("Current Load: " + loadStatus, cardRight - 30, 112);
+p.text("Current Load: " + loadStatus, cardRight - 28, cardY + 58);
 p.pop();
 
 const dayProgress = p.map(h + m / 60 + s / 3600, 9, 18, 0, 1, true);
@@ -184,7 +184,7 @@ p.textSize(30);
 p.textStyle(p.BOLD);
 p.noStroke();
 p.fill(30);
-p.text(formatTime(h, m, s), cardRight - 35, cardY + cardH - 45);
+p.text(formatTime(h, m, s), cardRight - 35, cardY + cardH - 38);
 p.pop();
   };
 
