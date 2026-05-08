@@ -178,3 +178,32 @@ p.line(currentX, chartY, currentX, baseY + 18);
 p.noStroke();
 p.fill(35);
 p.circle(currentX, baseY + 18, 6);
+
+p.push();
+p.textAlign(p.RIGHT, p.CENTER);
+p.textSize(30);
+p.textStyle(p.BOLD);
+p.noStroke();
+p.fill(30);
+p.text(formatTime(h, m, s), cardRight - 30, 405);
+p.pop();
+
+function formatDate() {
+  const d = new Date();
+  return d.toLocaleDateString("en-US", {
+    weekday: "long",
+    month: "long",
+    day: "numeric",
+    year: "numeric"
+  });
+}
+
+function formatTime(h, m, s) {
+  return (
+    String(h).padStart(2, "0") +
+    ":" +
+    String(m).padStart(2, "0") +
+    ":" +
+    String(s).padStart(2, "0")
+  );
+}
