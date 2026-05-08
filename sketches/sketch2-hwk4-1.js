@@ -206,3 +206,4 @@ function formatTime(h, m, s) {
     String(s).padStart(2, "0")
   );
 }
+});
