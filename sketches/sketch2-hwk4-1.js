@@ -14,9 +14,9 @@ registerSketch('sk2', function (p) {
     const s = p.second();
 
     const cardX = 50;
-    const cardY = 55;
-    const cardW = 740;
-    const cardH = 375;
+    const cardY = 80;
+    const cardW = 700;
+    const cardH = 550;
     const cardRight = cardX + cardW;
 
     p.noStroke();
@@ -42,9 +42,21 @@ registerSketch('sk2', function (p) {
     p.fill(55, 120, 200);
     p.text("Current Load: Normal", cardRight - 30, 112);
     p.textStyle(p.NORMAL);
+
+    const dayProgress = p.map(h + m / 60 + s / 3600, 9, 18, 0, 1, true);
+    const currentX = chartX + dayProgress * chartW;
+
+    p.stroke(35);
+    p.strokeWeight(2);
+    p.line(currentX, chartY, currentX, baseY + 18);
+
+    p.noStroke();
+    p.fill(35);
+    p.circle(currentX, baseY + 18, 6);
+
   };
 
-  p.windowResized = function () { 
+  p.windowResized = function () {
     p.resizeCanvas(CANVAS_SIZE, CANVAS_SIZE); };
 });
   function formatDate() {
@@ -56,11 +68,11 @@ registerSketch('sk2', function (p) {
     year: "numeric"
   });
 }
-  const chartX = 110;
-const chartY = 160;
-const chartW = 620;
-const chartH = 185;
-const baseY = chartY + chartH * 0.78;
+  const chartX = 100;
+  const chartY = 200;
+  const chartW = 600;
+  const chartH = 300;
+  const baseY = chartY + chartH * 0.78;
 
 p.stroke(220);
 p.strokeWeight(1);
@@ -144,7 +156,7 @@ p.vertex(chartX, baseY);
 p.curveVertex(chartX, baseY);
 
 for (let pt of pts) {
-  if (pt.y < baseY - 70) { 
+  if (pt.y < baseY - 70) {
     p.curveVertex(pt.x, pt.y);
   } else {
     p.curveVertex(pt.x, baseY);
