@@ -137,3 +137,24 @@ p.curveVertex(chartX + chartW, baseY);
 p.vertex(chartX + chartW, baseY);
 
 p.endShape(p.CLOSE);
+
+p.noStroke();
+p.fill(220, 65, 65, 225);
+
+p.beginShape();
+
+p.vertex(chartX, baseY);
+p.curveVertex(chartX, baseY);
+
+for (let pt of pts) {
+  if (pt.y < baseY - 70) { 
+    p.curveVertex(pt.x, pt.y);
+  } else {
+    p.curveVertex(pt.x, baseY);
+  }
+}
+
+p.curveVertex(chartX + chartW, baseY);
+p.vertex(chartX + chartW, baseY);
+
+p.endShape(p.CLOSE);
