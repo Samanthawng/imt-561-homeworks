@@ -72,3 +72,31 @@ for (let i = 0; i <= 3; i++) {
   const y = chartY + i * 48;
   p.line(chartX, y, chartX + chartW, y);
 }
+
+p.textAlign(p.CENTER);
+p.textSize(14);
+p.fill(70);
+
+for (let hr = 9; hr <= 18; hr++) {
+  const t = (hr - 9) / 9;
+  const x = chartX + t * chartW;
+
+  // tick line
+  p.stroke(70);
+  p.strokeWeight(1);
+  p.line(x, baseY, x, baseY + 14);
+
+  // dot
+  p.noStroke();
+  p.fill(60);
+  p.circle(x, baseY + 16, 3);
+
+  // label
+  let label;
+  if (hr === 12) label = "12PM";
+  else if (hr > 12) label = (hr - 12) + "PM";
+  else label = hr + "AM";
+
+  p.fill(70);
+  p.text(label, x, baseY + 38);
+}
