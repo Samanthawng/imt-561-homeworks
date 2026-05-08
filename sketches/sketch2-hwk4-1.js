@@ -147,3 +147,24 @@ for (let pt of pts) {
 
 p.curveVertex(pts[pts.length - 1].x, pts[pts.length - 1].y);
 p.endShape();
+
+const currentT = p.map(h + m / 60 + s / 3600, 9, 18, 0, 1, true);
+
+const currentIntensity =
+  0.08 +
+  p.exp(-p.pow((currentT - 0.44) * 6.4, 2)) * 0.88 +
+  p.exp(-p.pow((currentT - 0.57) * 8.2, 2)) * 0.52 +
+  p.exp(-p.pow((currentT - 0.78) * 6, 2)) * 0.26;
+
+const loadStatus = currentIntensity > 0.62 ? "High" : "Normal";
+
+// fixed: no bold, no black stroke
+p.push();
+p.textAlign(p.RIGHT, p.CENTER);
+p.textSize(15);
+p.textStyle(p.NORMAL);
+p.noStroke();
+p.fill(currentIntensity > 0.62 ? p.color(220, 65, 65) : p.color(55, 120, 200));
+p.text("Current Load: " + loadStatus, cardRight - 30, 112);
+p.pop();
+
