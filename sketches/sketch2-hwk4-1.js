@@ -121,3 +121,19 @@ for (let x = 0; x <= chartW; x += 6) {
 
   pts.push({ x: chartX + x, y });
 }
+  p.noStroke();
+p.fill(55, 120, 200, 210);
+
+p.beginShape();
+
+p.vertex(chartX, baseY);
+p.curveVertex(chartX, baseY);
+
+for (let pt of pts) {
+  p.curveVertex(pt.x, pt.y);
+}
+
+p.curveVertex(chartX + chartW, baseY);
+p.vertex(chartX + chartW, baseY);
+
+p.endShape(p.CLOSE);
