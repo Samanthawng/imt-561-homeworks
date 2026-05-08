@@ -98,7 +98,7 @@ for (let x = 0; x <= chartW; x += 6) {
 
   const y = baseY - intensity * 118 + flow;
 
-  pts.push({ x: chartX + x, y });
+  pts.push({ x: chartX + x, y, intensity });
 }
 
 p.noStroke();
@@ -132,8 +132,6 @@ for (let pt of pts) {
     p.curveVertex(chartX + chartW, baseY);
     p.vertex(chartX + chartW, baseY);
     p.endShape(p.CLOSE);
-
-  };
 
 p.noFill();
 p.stroke(25);
@@ -187,6 +185,7 @@ p.noStroke();
 p.fill(30);
 p.text(formatTime(h, m, s), cardRight - 30, 405);
 p.pop();
+  };
 
 function formatDate() {
   const d = new Date();
