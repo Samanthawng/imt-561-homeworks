@@ -168,3 +168,13 @@ p.fill(currentIntensity > 0.62 ? p.color(220, 65, 65) : p.color(55, 120, 200));
 p.text("Current Load: " + loadStatus, cardRight - 30, 112);
 p.pop();
 
+const dayProgress = p.map(h + m / 60 + s / 3600, 9, 18, 0, 1, true);
+const currentX = chartX + dayProgress * chartW;
+
+p.stroke(35);
+p.strokeWeight(2);
+p.line(currentX, chartY, currentX, baseY + 18);
+
+p.noStroke();
+p.fill(35);
+p.circle(currentX, baseY + 18, 6);
