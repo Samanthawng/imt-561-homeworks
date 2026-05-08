@@ -1,12 +1,9 @@
 // Instance-mode sketch for tab 2
 registerSketch('sk2', function (p) {
   const CANVAS_SIZE = 800;
-  const W = 900;
-  const H = 560;
-
 
   p.setup = function () {
-    p.createCanvas(W, H);
+    p.createCanvas(CANVAS_SIZE, CANVAS_SIZE);
     p.textFont("Georgia, 'Times New Roman', serif");
   };
 
