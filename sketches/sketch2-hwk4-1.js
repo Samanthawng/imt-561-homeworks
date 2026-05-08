@@ -84,7 +84,7 @@ registerSketch('sk2', function (p) {
 
 let pts = [];
 
-for (let x = 0; x <= chartW; x += 6) {
+for (let x = 0; x < chartW; x += 6) {
   const t = x / chartW;
 
   const noonPeak = p.exp(-p.pow((t - 0.44) * 6.4, 2));
@@ -107,7 +107,6 @@ p.noStroke();
 p.fill(55, 120, 200, 210);
 p.beginShape();
 p.vertex(chartX, baseY);
-p.curveVertex(chartX, baseY);
 
 for (let pt of pts) {
       p.curveVertex(pt.x, pt.y);
