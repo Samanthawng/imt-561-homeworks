@@ -1,107 +1,6 @@
-// Instance-mode sketch for tab 15
 registerSketch('sk15', function (p) {
   let hoverItem = null;
 
-  const CANVAS_SIZE = 800;
-
-  p.setup = function () {
-    p.createCanvas(CANVAS_SIZE, CANVAS_SIZE);
-    p.textFont("Arial");
-  };
-
-  p.draw = function () {
-    hoverItem = null;
-    p.background("#FAF8F4");
-
-    drawHeader();
-    drawSectionLabel();
-    drawTakeaway();
-
-    // Frame from professor template
-    p.noFill();
-    p.stroke(0);
-    p.strokeWeight(1);
-    p.rect(0, 0, p.width - 1, p.height - 1);
-  };
-
-  function drawHeader() {
-    p.noStroke();
-    p.fill("#222");
-    p.textAlign(p.CENTER, p.TOP);
-
-    p.textSize(33);
-    p.textStyle(p.BOLD);
-    p.text("Music Taste Changes with the Moment", p.width / 2, 38);
-
-    p.textSize(14);
-    p.textStyle(p.NORMAL);
-    p.fill("#555");
-    p.text(
-      "Selected genres show different listening patterns across morning, afternoon, and night.",
-      p.width / 2,
-      86
-    );
-
-    p.textSize(12);
-    p.fill("#777");
-    p.text(
-      "Percentages show each genre's share within that listening moment.",
-      p.width / 2,
-      110
-    );
-  }
-
-  function drawSectionLabel() {
-    p.noStroke();
-    p.fill("#E8F0E3");
-    p.rect(250, 138, 300, 36, 12);
-
-    p.fill("#2F4F3A");
-    p.textAlign(p.CENTER, p.CENTER);
-    p.textSize(17);
-    p.textStyle(p.BOLD);
-    p.text("WHEN YOU LISTEN", p.width / 2, 156);
-  }
-
-  function drawTakeaway() {
-    p.fill("#FFF4CF");
-    p.stroke("#E9C46A");
-    p.strokeWeight(2);
-    p.rect(70, 680, 660, 70, 14);
-
-    p.noStroke();
-    p.fill("#222");
-    p.textAlign(p.LEFT, p.CENTER);
-    p.textSize(17);
-    p.textStyle(p.BOLD);
-    p.text("Takeaway:", 105, 716);
-
-    p.textStyle(p.NORMAL);
-    p.textSize(14);
-    p.fill("#333");
-    p.text(
-      "Genre shares vary across listening moments,\nbut the peak moment is not the same for every genre.",
-      215,
-      716
-    );
-
-    p.textSize(10);
-    p.fill("#777");
-    p.textAlign(p.CENTER, p.CENTER);
-    p.text(
-      "Data: Global Music Streaming Listener Preferences Dataset",
-      p.width / 2,
-      775
-    );
-  }
-
-  p.windowResized = function () {
-    p.resizeCanvas(CANVAS_SIZE, CANVAS_SIZE);
-  };
-});
-
-
-registerSketch('sk15', function (p) {
   const CANVAS_SIZE = 800;
 
   const moments = ["Morning", "Afternoon", "Night"];
@@ -166,6 +65,8 @@ registerSketch('sk15', function (p) {
   };
 
   p.draw = function () {
+    hoverItem = null;
+
     p.background("#FAF8F4");
 
     drawHeader();
@@ -175,7 +76,6 @@ registerSketch('sk15', function (p) {
     drawLegend();
     drawTakeaway();
     drawTooltip();
-
 
     // Frame from professor template
     p.noFill();
@@ -251,29 +151,28 @@ registerSketch('sk15', function (p) {
         const barW = p.map(item.percent, 0, maxPercent, 0, maxBarW);
         const y = yBase + j * (barH + barGap);
 
-      p.fill(momentColors[moment]);
-      p.noStroke();
-      p.rect(chartX, y, barW, barH, 3);
-
-      if (
-        p.mouseX >= chartX &&
-        p.mouseX <= chartX + barW &&
-        p.mouseY >= y &&
-        p.mouseY <= y + barH
-      ) {
-        hoverItem = {
-          genre,
-          moment,
-          percent: item.percent,
-          count: item.count
-        };
-
-        p.noFill();
-        p.stroke("#222");
-        p.strokeWeight(2);
+        p.fill(momentColors[moment]);
+        p.noStroke();
         p.rect(chartX, y, barW, barH, 3);
+
+        if (
+          p.mouseX >= chartX &&
+          p.mouseX <= chartX + barW &&
+          p.mouseY >= y &&
+          p.mouseY <= y + barH
+        ) {
+          hoverItem = {
+            genre,
+            moment,
+            percent: item.percent,
+            count: item.count
+          };
+
+          p.noFill();
+          p.stroke("#222");
+          p.strokeWeight(2);
+          p.rect(chartX, y, barW, barH, 3);
         }
-        
       }
     }
   }
@@ -302,10 +201,11 @@ registerSketch('sk15', function (p) {
     p.text(
       "Share within listening moment",
       chartX + maxBarW / 2,
-      chartY + rowCount * rowGap + 4
+      chartY + rowCount * rowGap - 2
     );
   }
-    function drawAnnotations() {
+
+  function drawAnnotations() {
     const chartX = 190;
     const chartY = 215;
     const maxBarW = 375;
@@ -362,7 +262,7 @@ registerSketch('sk15', function (p) {
 
   function drawLegend() {
     const x0 = 220;
-    const y = 645;
+    const y = 660;
 
     p.textAlign(p.LEFT, p.CENTER);
     p.textSize(13);
@@ -386,14 +286,14 @@ registerSketch('sk15', function (p) {
     p.fill("#FFF4CF");
     p.stroke("#E9C46A");
     p.strokeWeight(2);
-    p.rect(70, 680, 660, 70, 14);
+    p.rect(70, 690, 660, 60, 14);
 
     p.noStroke();
     p.fill("#222");
     p.textAlign(p.LEFT, p.CENTER);
     p.textSize(17);
     p.textStyle(p.BOLD);
-    p.text("Takeaway:", 105, 716);
+    p.text("Takeaway:", 105, 721);
 
     p.textStyle(p.NORMAL);
     p.textSize(14);
@@ -401,7 +301,7 @@ registerSketch('sk15', function (p) {
     p.text(
       "Genre shares vary across listening moments,\nbut the peak moment is not the same for every genre.",
       215,
-      716
+      721
     );
 
     p.textSize(10);
@@ -413,7 +313,8 @@ registerSketch('sk15', function (p) {
       775
     );
   }
-    function drawTooltip() {
+
+  function drawTooltip() {
     if (!hoverItem) return;
 
     const tooltipW = 220;
@@ -448,9 +349,8 @@ registerSketch('sk15', function (p) {
     p.text("Share: " + hoverItem.percent.toFixed(2) + "%", x + 14, y + 38);
     p.text("Count: " + hoverItem.count + " listeners", x + 14, y + 58);
   }
-  
+
   p.windowResized = function () {
     p.resizeCanvas(CANVAS_SIZE, CANVAS_SIZE);
   };
 });
-
