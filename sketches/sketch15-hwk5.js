@@ -1,5 +1,7 @@
 // Instance-mode sketch for tab 15
 registerSketch('sk15', function (p) {
+  let hoverItem = null;
+
   const CANVAS_SIZE = 800;
 
   p.setup = function () {
@@ -8,6 +10,7 @@ registerSketch('sk15', function (p) {
   };
 
   p.draw = function () {
+    hoverItem = null;
     p.background("#FAF8F4");
 
     drawHeader();
@@ -171,6 +174,8 @@ registerSketch('sk15', function (p) {
     drawAnnotations();
     drawLegend();
     drawTakeaway();
+    drawTooltip();
+
 
     // Frame from professor template
     p.noFill();
@@ -246,9 +251,29 @@ registerSketch('sk15', function (p) {
         const barW = p.map(item.percent, 0, maxPercent, 0, maxBarW);
         const y = yBase + j * (barH + barGap);
 
-        p.fill(momentColors[moment]);
-        p.noStroke();
+      p.fill(momentColors[moment]);
+      p.noStroke();
+      p.rect(chartX, y, barW, barH, 3);
+
+      if (
+        p.mouseX >= chartX &&
+        p.mouseX <= chartX + barW &&
+        p.mouseY >= y &&
+        p.mouseY <= y + barH
+      ) {
+        hoverItem = {
+          genre,
+          moment,
+          percent: item.percent,
+          count: item.count
+        };
+
+        p.noFill();
+        p.stroke("#222");
+        p.strokeWeight(2);
         p.rect(chartX, y, barW, barH, 3);
+        }
+        
       }
     }
   }
@@ -334,7 +359,7 @@ registerSketch('sk15', function (p) {
     p.textStyle(p.BOLD);
     p.text(label, boxX + 65, boxY + 25);
   }
-  
+
   function drawLegend() {
     const x0 = 220;
     const y = 645;
