@@ -12,7 +12,7 @@ registerSketch('sk15', function (p) {
     p.fill(70);
     p.textSize(32);
     p.textAlign(p.CENTER, p.CENTER);
-    p.text('HWK #5', p.width / 2, p.height / 2);
+    p.text('Music Taste Changes with the Moment', p.width / 2, 80);
 
     // Draw frame as part of the sketch output.
     p.noFill();
