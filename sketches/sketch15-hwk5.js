@@ -413,7 +413,42 @@ registerSketch('sk15', function (p) {
       775
     );
   }
+    function drawTooltip() {
+    if (!hoverItem) return;
 
+    const tooltipW = 220;
+    const tooltipH = 82;
+
+    let x = p.mouseX + 16;
+    let y = p.mouseY - 20;
+
+    if (x + tooltipW > p.width) {
+      x = p.mouseX - tooltipW - 16;
+    }
+
+    if (y + tooltipH > p.height) {
+      y = p.height - tooltipH - 12;
+    }
+
+    p.fill(255);
+    p.stroke("#333");
+    p.strokeWeight(1);
+    p.rect(x, y, tooltipW, tooltipH, 10);
+
+    p.noStroke();
+    p.fill("#222");
+    p.textAlign(p.LEFT, p.TOP);
+    p.textSize(13);
+    p.textStyle(p.BOLD);
+    p.text(hoverItem.moment + " · " + hoverItem.genre, x + 14, y + 14);
+
+    p.textStyle(p.NORMAL);
+    p.textSize(12);
+    p.fill("#444");
+    p.text("Share: " + hoverItem.percent.toFixed(2) + "%", x + 14, y + 38);
+    p.text("Count: " + hoverItem.count + " listeners", x + 14, y + 58);
+  }
+  
   p.windowResized = function () {
     p.resizeCanvas(CANVAS_SIZE, CANVAS_SIZE);
   };
