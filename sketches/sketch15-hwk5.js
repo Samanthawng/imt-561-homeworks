@@ -168,6 +168,7 @@ registerSketch('sk15', function (p) {
     drawHeader();
     drawSectionLabel();
     drawGroupedBars();
+    drawAnnotations();
     drawLegend();
     drawTakeaway();
 
@@ -279,7 +280,61 @@ registerSketch('sk15', function (p) {
       chartY + rowCount * rowGap + 4
     );
   }
+    function drawAnnotations() {
+    const chartX = 190;
+    const chartY = 215;
+    const maxBarW = 375;
+    const rowGap = 60;
+    const barH = 12;
+    const barGap = 5;
+    const maxPercent = 12.5;
 
+    drawCallout(
+      chartX + p.map(data.Rock.Morning.percent, 0, maxPercent, 0, maxBarW) + 12,
+      chartY + 2 * rowGap + 4,
+      620,
+      chartY + 2 * rowGap - 8,
+      "Rock is slightly\nhigher in the morning.",
+      momentColors.Morning
+    );
+
+    drawCallout(
+      chartX + p.map(data.Jazz.Afternoon.percent, 0, maxPercent, 0, maxBarW) + 12,
+      chartY + 4 * rowGap + (barH + barGap) + 6,
+      620,
+      chartY + 4 * rowGap + 14,
+      "Jazz and Country\nrise in the afternoon.",
+      momentColors.Afternoon
+    );
+
+    drawCallout(
+      chartX + p.map(data.Reggae.Night.percent, 0, maxPercent, 0, maxBarW) + 12,
+      chartY + 6 * rowGap + 2 * (barH + barGap) + 6,
+      620,
+      chartY + 6 * rowGap + 16,
+      "Reggae peaks\nat night.",
+      momentColors.Night
+    );
+  }
+
+  function drawCallout(startX, startY, boxX, boxY, label, color) {
+    p.stroke(color);
+    p.strokeWeight(1.5);
+    p.line(startX, startY, boxX - 10, boxY + 24);
+
+    p.fill("#FAF8F4");
+    p.stroke(color);
+    p.strokeWeight(1.5);
+    p.rect(boxX, boxY, 130, 50, 10);
+
+    p.noStroke();
+    p.fill(color);
+    p.textAlign(p.CENTER, p.CENTER);
+    p.textSize(11);
+    p.textStyle(p.BOLD);
+    p.text(label, boxX + 65, boxY + 25);
+  }
+  
   function drawLegend() {
     const x0 = 220;
     const y = 645;
@@ -338,3 +393,4 @@ registerSketch('sk15', function (p) {
     p.resizeCanvas(CANVAS_SIZE, CANVAS_SIZE);
   };
 });
+
