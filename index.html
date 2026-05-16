@@ -188,52 +188,60 @@
     <!-- Homework 5 -->
     <section id="tab15" class="tab-content" role="tabpanel">
       <div id="sketch-container-sk15" class="sketch-container"></div>
+      
       <div id="sketch-drawing-sk15" class="sketch-evolution">
         <div class="welcome-template hwk-template" aria-labelledby="sk15-notes-title">
-         <p>
-        This visualization compares selected genre preferences across Morning, Afternoon, and Night.
+        <h3 id="sk15-notes-title">Documenting Iterative Process</h3>
+
+      <p>
+        <strong>Context of use:</strong> This narrative visualization is designed for a social-media-style data story.
+        It helps viewers quickly compare how selected music genre preferences vary across Morning, Afternoon, and Night.
         Hover tooltips reveal the exact percentage and user count for each bar.
       </p>
+
+      <article class="clock-template">
+        <h4>Final Visualization — Music Preferences by Listening Moment</h4>
+        <p class="small-note">Sketch iteration documentation (paper / hand-drawn photos)</p>
+
+        <div class="iteration-grid">
+          <figure class="iteration-item">
+            <img src="images/hwk5-sketch-heatmap.jpg" alt="HW5 heatmap sketch">
+            <figcaption>
+              Early sketch: heatmap idea for comparing listening moment and genre concentration.
+            </figcaption>
+          </figure>
+
+          <figure class="iteration-item">
+            <img src="images/hwk5-sketch-refined.jpg" alt="HW5 refined grouped bar sketch">
+            <figcaption>
+              Refined sketch: grouped bars comparing Morning, Afternoon, and Night within each genre.
+            </figcaption>
+          </figure>
+        </div>
+
+        <p>
+          <strong>Design process:</strong> This visualization went through several iterations before reaching the final design.
+          Early sketches explored a heatmap, subscription-based comparison, and listening-moment comparison.
+          These explorations helped narrow the story from broad user factors to a clearer focus on how listening moment relates to genre preference.
+        </p>
+
+        <p>
+          <strong>Feedback-based revision:</strong> Based on class feedback, I revised the visualization to clarify what each percentage represents
+          and how the listening moments are defined. I also tested a tendency-line version, but the values were close together and the lines became visually cluttered.
+          I returned to the grouped bar chart because it made the comparison across listening moments clearer and easier to read.
+        </p>
+
+        <p>
+          <strong>Final refinement:</strong> In the final version, I removed extra annotation boxes, added clearer title and axis labels,
+          included time ranges in the legend, and kept hover interaction for exact percentages and counts.
+        </p>
+
+        <p>
+          <strong>Self-reflection / future work:</strong> I would improve the workflow by loading the processed CSV directly into P5.js
+          instead of manually entering summary values. I would also test fewer selected genres or a small-multiple layout to see whether the story could become even clearer.
+        </p>
+      </article>
     </div>
-
-    <section class="process-section">
-      <h2>Documenting Iterative Process</h2>
-
-      <p>
-        This visualization went through several iterations before reaching the final design.
-        Early sketches explored a heatmap, subscription-based comparison, and listening-moment comparison.
-        These explorations helped narrow the story from broad user factors to a clearer focus on how
-        listening moment relates to genre preference.
-      </p>
-
-      <p>
-        Based on class feedback, I revised the visualization to clarify what each percentage represents
-        and how the listening moments are defined. I also tested a tendency-line version, but the values
-        were close together and the lines became visually cluttered. I returned to the grouped bar chart
-        because it made the comparison across listening moments clearer and easier to read.
-      </p>
-
-      <div class="sketch-gallery">
-        <figure>
-          <img src="images/hwk5-sketch-heatmap.jpg" alt="HW5 heatmap sketch">
-          <figcaption>
-            Early sketch: heatmap idea for comparing listening moment and genre concentration.
-          </figcaption>
-        </figure>
-
-        <figure>
-          <img src="images/hwk5-sketch-refined.jpg" alt="HW5 refined sketch">
-          <figcaption>
-            Refined sketch: grouped bars comparing Morning, Afternoon, and Night within each genre.
-          </figcaption>
-        </figure>
-      </div>
-
-      <p>
-        In the final version, I removed extra annotation boxes, added clearer title and axis labels,
-        included time ranges in the legend, and kept hover interaction for exact percentages and counts.
-      </p>
-    </section>
   </div>
 </section>
 
