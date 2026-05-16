@@ -5,6 +5,12 @@ registerSketch('sk15', function (p) {
 
   const moments = ["Morning", "Afternoon", "Night"];
 
+  const momentLabels = {
+    Morning: "Morning (6am–12pm)",
+    Afternoon: "Afternoon (12pm–6pm)",
+    Night: "Night (6pm–12am)"
+  };
+
   const selectedGenres = [
     "Pop",
     "Hip-Hop",
@@ -54,9 +60,9 @@ registerSketch('sk15', function (p) {
   };
 
   const momentColors = {
-    Morning: "#D9A404",
-    Afternoon: "#C44536",
-    Night: "#1F4E79"
+    Morning: "#D4A82F",
+    Afternoon: "#C2553E",
+    Night: "#2F5687"
   };
 
   p.setup = function () {
@@ -65,23 +71,15 @@ registerSketch('sk15', function (p) {
   };
 
   p.draw = function () {
+    p.background("#F8F6F1");
     hoverItem = null;
 
-    p.background("#FAF8F4");
-
     drawHeader();
-    drawSectionLabel();
     drawGroupedBars();
-    drawAnnotations();
     drawLegend();
     drawTakeaway();
+    drawFooter();
     drawTooltip();
-
-    // Frame from professor template
-    p.noFill();
-    p.stroke(0);
-    p.strokeWeight(1);
-    p.rect(0, 0, p.width - 1, p.height - 1);
   };
 
   function drawHeader() {
@@ -89,50 +87,39 @@ registerSketch('sk15', function (p) {
     p.fill("#222");
     p.textAlign(p.CENTER, p.TOP);
 
-    p.textSize(33);
+    p.textSize(27);
     p.textStyle(p.BOLD);
-    p.text("Music Taste Changes with the Moment", p.width / 2, 38);
+    p.text("Music Preferences by Listening Moment", p.width / 2, 24);
 
-    p.textSize(14);
+    p.textSize(12.5);
     p.textStyle(p.NORMAL);
     p.fill("#555");
     p.text(
-      "Selected genres show different listening patterns across morning, afternoon, and night.",
+      "Bars compare the share of users preferring each genre during morning, afternoon, and night listening.",
+      p.width / 2,
+      64
+    );
+
+    p.textSize(11);
+    p.fill("#777");
+    p.text(
+      "Each percentage shows the share within that listening moment.",
       p.width / 2,
       86
     );
-
-    p.textSize(12);
-    p.fill("#777");
-    p.text(
-      "Percentages show each genre's share within that listening moment.",
-      p.width / 2,
-      110
-    );
-  }
-
-  function drawSectionLabel() {
-    p.noStroke();
-    p.fill("#E8F0E3");
-    p.rect(250, 138, 300, 36, 12);
-
-    p.fill("#2F4F3A");
-    p.textAlign(p.CENTER, p.CENTER);
-    p.textSize(17);
-    p.textStyle(p.BOLD);
-    p.text("WHEN YOU LISTEN", p.width / 2, 156);
   }
 
   function drawGroupedBars() {
     const chartX = 190;
-    const chartY = 215;
-    const maxBarW = 375;
-    const rowGap = 60;
-    const barH = 12;
-    const barGap = 5;
-    const maxPercent = 12.5;
+    const chartY = 165;
+    const maxBarW = 505;
+    const rowGap = 57;
+    const barH = 12.5;
+    const barGap = 4.5;
+    const maxPercent = 15;
 
     drawAxis(chartX, chartY, maxBarW, selectedGenres.length, rowGap, maxPercent);
+    drawYAxisTitle(chartX, chartY, selectedGenres.length, rowGap);
 
     for (let i = 0; i < selectedGenres.length; i++) {
       const genre = selectedGenres[i];
@@ -141,9 +128,9 @@ registerSketch('sk15', function (p) {
       p.noStroke();
       p.fill("#222");
       p.textAlign(p.RIGHT, p.CENTER);
-      p.textSize(14);
+      p.textSize(14.5);
       p.textStyle(p.BOLD);
-      p.text(genre, chartX - 18, yBase + 17);
+      p.text(genre, chartX - 16, yBase + 17);
 
       for (let j = 0; j < moments.length; j++) {
         const moment = moments[j];
@@ -153,7 +140,7 @@ registerSketch('sk15', function (p) {
 
         p.fill(momentColors[moment]);
         p.noStroke();
-        p.rect(chartX, y, barW, barH, 3);
+        p.rect(chartX, y, barW, barH, 4);
 
         if (
           p.mouseX >= chartX &&
@@ -170,145 +157,128 @@ registerSketch('sk15', function (p) {
 
           p.noFill();
           p.stroke("#222");
-          p.strokeWeight(2);
-          p.rect(chartX, y, barW, barH, 3);
+          p.strokeWeight(1.6);
+          p.rect(chartX, y, barW, barH, 4);
         }
       }
     }
   }
 
   function drawAxis(chartX, chartY, maxBarW, rowCount, rowGap, maxPercent) {
-    p.stroke("#D8CEC3");
-    p.strokeWeight(1);
+    const tickValues = [0, 3, 6, 9, 12, 15];
 
-    for (let tick = 0; tick <= 12; tick += 3) {
+    for (let i = 0; i < tickValues.length; i++) {
+      const tick = tickValues[i];
       const x = chartX + p.map(tick, 0, maxPercent, 0, maxBarW);
-      p.line(x, chartY - 20, x, chartY + rowCount * rowGap - 15);
+
+      p.stroke("#D8D0C6");
+      p.strokeWeight(1);
+      p.line(x, chartY - 18, x, chartY + rowCount * rowGap - 10);
 
       p.noStroke();
-      p.fill("#777");
+      p.fill("#6E6E6E");
       p.textAlign(p.CENTER, p.CENTER);
-      p.textSize(11);
-      p.text(tick + "%", x, chartY - 32);
-
-      p.stroke("#D8CEC3");
+      p.textSize(9.8);
+      p.textStyle(p.BOLD);
+      p.text(tick + "%", x, chartY - 30);
     }
 
     p.noStroke();
     p.fill("#555");
     p.textAlign(p.CENTER, p.CENTER);
-    p.textSize(12);
+    p.textSize(11);
+    p.textStyle(p.BOLD);
     p.text(
-      "Share within listening moment",
+      "Share of users within each listening moment (%)",
       chartX + maxBarW / 2,
-      chartY + rowCount * rowGap - 2
+      chartY + rowCount * rowGap + 16
     );
   }
 
-  function drawAnnotations() {
-    const chartX = 190;
-    const chartY = 215;
-    const maxBarW = 375;
-    const rowGap = 60;
-    const barH = 12;
-    const barGap = 5;
-    const maxPercent = 12.5;
+  function drawYAxisTitle(chartX, chartY, rowCount, rowGap) {
+    p.push();
 
-    drawCallout(
-      chartX + p.map(data.Rock.Morning.percent, 0, maxPercent, 0, maxBarW) + 12,
-      chartY + 2 * rowGap + 4,
-      620,
-      chartY + 2 * rowGap - 8,
-      "Rock is slightly\nhigher in the morning.",
-      momentColors.Morning
-    );
-
-    drawCallout(
-      chartX + p.map(data.Jazz.Afternoon.percent, 0, maxPercent, 0, maxBarW) + 12,
-      chartY + 4 * rowGap + (barH + barGap) + 6,
-      620,
-      chartY + 4 * rowGap + 14,
-      "Jazz and Country\nrise in the afternoon.",
-      momentColors.Afternoon
-    );
-
-    drawCallout(
-      chartX + p.map(data.Reggae.Night.percent, 0, maxPercent, 0, maxBarW) + 12,
-      chartY + 6 * rowGap + 2 * (barH + barGap) + 6,
-      620,
-      chartY + 6 * rowGap + 16,
-      "Reggae peaks\nat night.",
-      momentColors.Night
-    );
-  }
-
-  function drawCallout(startX, startY, boxX, boxY, label, color) {
-    p.stroke(color);
-    p.strokeWeight(1.5);
-    p.line(startX, startY, boxX - 10, boxY + 24);
-
-    p.fill("#FAF8F4");
-    p.stroke(color);
-    p.strokeWeight(1.5);
-    p.rect(boxX, boxY, 130, 50, 10);
+    p.translate(chartX - 128, chartY + (rowCount * rowGap) / 2 - 8);
+    p.rotate(-p.HALF_PI);
 
     p.noStroke();
-    p.fill(color);
+    p.fill("#555");
     p.textAlign(p.CENTER, p.CENTER);
     p.textSize(11);
     p.textStyle(p.BOLD);
-    p.text(label, boxX + 65, boxY + 25);
+    p.text("Preferred music genre", 0, 0);
+
+    p.pop();
   }
 
   function drawLegend() {
-    const x0 = 220;
-    const y = 660;
+    const y = 642;
 
+    const contentBoxW = 575;
+    const contentBoxX = (p.width - contentBoxW) / 2;
+
+    const positions = [
+      contentBoxX,
+      contentBoxX + 215,
+      contentBoxX + 430
+    ];
+
+    p.noStroke();
     p.textAlign(p.LEFT, p.CENTER);
-    p.textSize(13);
+    p.textSize(11.5);
     p.textStyle(p.NORMAL);
 
-    let x = x0;
+    for (let i = 0; i < moments.length; i++) {
+      const moment = moments[i];
+      const x = positions[i];
 
-    for (const moment of moments) {
       p.fill(momentColors[moment]);
-      p.noStroke();
-      p.rect(x, y, 18, 12, 3);
+      p.rect(x, y, 17, 12, 3);
 
       p.fill("#333");
-      p.text(moment, x + 25, y + 6);
-
-      x += 125;
+      p.text(momentLabels[moment], x + 23, y + 6);
     }
   }
 
   function drawTakeaway() {
     p.fill("#FFF4CF");
-    p.stroke("#E9C46A");
+    p.stroke("#E3C15B");
     p.strokeWeight(2);
-    p.rect(70, 690, 660, 60, 14);
+
+    const boxW = 575;
+    const boxH = 66;
+    const boxX = (p.width - boxW) / 2;
+    const boxY = 685;
+
+    p.rect(boxX, boxY, boxW, boxH, 15);
 
     p.noStroke();
     p.fill("#222");
-    p.textAlign(p.LEFT, p.CENTER);
-    p.textSize(17);
+    p.textAlign(p.LEFT, p.TOP);
+    p.textSize(15.5);
     p.textStyle(p.BOLD);
-    p.text("Takeaway:", 105, 721);
+    p.text("Takeaway:", boxX + 22, boxY + 19);
 
     p.textStyle(p.NORMAL);
-    p.textSize(14);
+    p.textSize(12.8);
     p.fill("#333");
     p.text(
-      "Genre shares vary across listening moments,\nbut the peak moment is not the same for every genre.",
-      215,
-      721
+      "Different genres peak at different listening moments,\nshowing that user preferences vary across the day.",
+      boxX + 135,
+      boxY + 17,
+      400,
+      38
     );
+  }
 
-    p.textSize(10);
+  function drawFooter() {
+    p.noStroke();
     p.fill("#777");
     p.textAlign(p.CENTER, p.CENTER);
+    p.textSize(9.5);
+    p.textStyle(p.NORMAL);
     p.text(
-      "Data: Global Music Streaming Listener Preferences Dataset",
+      "Data filtered to valid records with listening moment and preferred genre. Hover over a bar to see exact values.",
       p.width / 2,
       775
     );
@@ -317,18 +287,18 @@ registerSketch('sk15', function (p) {
   function drawTooltip() {
     if (!hoverItem) return;
 
-    const tooltipW = 220;
-    const tooltipH = 82;
+    const tooltipW = 218;
+    const tooltipH = 78;
 
-    let x = p.mouseX + 16;
-    let y = p.mouseY - 20;
+    let x = p.mouseX + 12;
+    let y = p.mouseY - 18;
 
     if (x + tooltipW > p.width) {
-      x = p.mouseX - tooltipW - 16;
+      x = p.mouseX - tooltipW - 12;
     }
 
     if (y + tooltipH > p.height) {
-      y = p.height - tooltipH - 12;
+      y = p.height - tooltipH - 10;
     }
 
     p.fill(255);
@@ -339,18 +309,14 @@ registerSketch('sk15', function (p) {
     p.noStroke();
     p.fill("#222");
     p.textAlign(p.LEFT, p.TOP);
-    p.textSize(13);
+    p.textSize(12.5);
     p.textStyle(p.BOLD);
-    p.text(hoverItem.moment + " · " + hoverItem.genre, x + 14, y + 14);
+    p.text(hoverItem.moment + " · " + hoverItem.genre, x + 12, y + 12);
 
     p.textStyle(p.NORMAL);
-    p.textSize(12);
+    p.textSize(11.5);
     p.fill("#444");
-    p.text("Share: " + hoverItem.percent.toFixed(2) + "%", x + 14, y + 38);
-    p.text("Count: " + hoverItem.count + " listeners", x + 14, y + 58);
+    p.text("Share: " + hoverItem.percent.toFixed(2) + "%", x + 12, y + 36);
+    p.text("Count: " + hoverItem.count + " users", x + 12, y + 54);
   }
-
-  p.windowResized = function () {
-    p.resizeCanvas(CANVAS_SIZE, CANVAS_SIZE);
-  };
 });
