@@ -1,7 +1,7 @@
 registerSketch('sk15', function (p) {
   let hoverItem = null;
 
-  const CANVAS_SIZE = 800;
+  const CANVAS_SIZE = 900;
 
   const moments = ["Morning", "Afternoon", "Night"];
 
